@@ -1,4 +1,4 @@
-# Slab
+# Fixed size slab
 
 Pre-allocated storage for a uniform data type.
 
@@ -44,5 +44,5 @@ This project is licensed under the [MIT license](LICENSE).
 ### Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in `slab` by you, shall be licensed as MIT, without any additional
+for inclusion in `fixed-slab` by you, shall be licensed as MIT, without any additional
 terms or conditions.

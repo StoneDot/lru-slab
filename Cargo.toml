@@ -1,6 +1,6 @@
 [package]
 
-name = "slab"
+name = "fixed-slab"
 # When releasing to crates.io:
 # - Update version number
 #   - lib.rs: html_root_url.
@@ -10,13 +10,13 @@ name = "slab"
 #   - Cargo.toml
 #   - README.md
 # - Create git tag
-version = "0.4.2"
+version = "0.0.1"
 license = "MIT"
-authors = ["Carl Lerche <me@carllerche.com>"]
+authors = ["Hiroaki Goto <goto.inct@gmail.com>", "Carl Lerche <me@carllerche.com>"]
 description = "Pre-allocated storage for a uniform data type"
-documentation = "https://docs.rs/slab/0.4.2/slab/"
-homepage = "https://github.com/carllerche/slab"
-repository = "https://github.com/carllerche/slab"
+#documentation = "https://docs.rs/slab/0.4.2/slab/"
+#homepage = "https://github.com/carllerche/slab"
+#repository = "https://github.com/carllerche/slab"
 readme = "README.md"
 keywords = ["slab", "allocator"]
 categories = ["memory-management", "data-structures"]
