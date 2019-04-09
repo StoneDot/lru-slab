@@ -1,6 +1,6 @@
 [package]
 
-name = "fixed-slab"
+name = "lru-slab"
 # When releasing to crates.io:
 # - Update version number
 #   - lib.rs: html_root_url.
