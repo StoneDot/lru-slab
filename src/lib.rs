@@ -23,7 +23,7 @@
 //! Basic storing and retrieval.
 //!
 //! ```
-//! # use slab::*;
+//! # use lru_slab::*;
 //! let mut slab = Slab::new();
 //!
 //! let hello = slab.insert("hello");
@@ -40,7 +40,7 @@
 //! inserted in the slab. This can be done with the `vacant_entry` API as such:
 //!
 //! ```
-//! # use slab::*;
+//! # use lru_slab::*;
 //! let mut slab = Slab::new();
 //!
 //! let hello = {
@@ -61,7 +61,7 @@
 //! To avoid this, add a check.
 //!
 //! ```
-//! # use slab::*;
+//! # use lru_slab::*;
 //! let mut slab = Slab::with_capacity(1024);
 //!
 //! // ... use the slab
@@ -139,7 +139,7 @@ impl<T> Default for Slab<T> {
 /// # Examples
 ///
 /// ```
-/// # use slab::*;
+/// # use lru_slab::*;
 /// let mut slab = Slab::new();
 ///
 /// let hello = {
@@ -195,7 +195,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let slab: Slab<i32> = Slab::new();
     /// ```
     pub fn new() -> Slab<T> {
@@ -215,7 +215,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::with_capacity(10);
     ///
     /// // The slab contains no values, even though it has capacity for more
@@ -242,7 +242,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let slab: Slab<i32> = Slab::with_capacity(10);
     /// assert_eq!(slab.capacity(), 10);
     /// ```
@@ -270,7 +270,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// slab.insert("hello");
     /// slab.reserve(10);
@@ -304,7 +304,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// slab.insert("hello");
     /// slab.reserve_exact(10);
@@ -331,7 +331,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::with_capacity(10);
     ///
     /// for i in 0..3 {
@@ -346,7 +346,7 @@ impl<T> Slab<T> {
     /// values are removed:
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::with_capacity(10);
     ///
     /// for i in 0..4 {
@@ -422,7 +422,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     ///
     /// let mut slab = Slab::with_capacity(10);
     /// let a = slab.insert('a');
@@ -439,7 +439,7 @@ impl<T> Slab<T> {
     /// The value is not moved when the closure returns `Err`:
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     ///
     /// let mut slab = Slab::with_capacity(100);
     /// let a = slab.insert('a');
@@ -508,7 +508,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// for i in 0..3 {
@@ -529,7 +529,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// for i in 0..3 {
@@ -547,7 +547,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// assert!(slab.is_empty());
     ///
@@ -568,7 +568,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// for i in 0..3 {
@@ -599,7 +599,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let key1 = slab.insert(0);
@@ -629,7 +629,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// let key = slab.insert("hello");
     ///
@@ -651,7 +651,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// let key = slab.insert("hello");
     ///
@@ -675,7 +675,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// let key = slab.insert(2);
     ///
@@ -698,7 +698,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// let key = slab.insert(2);
     ///
@@ -731,7 +731,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     ///
     /// let mut slab = Slab::new();
     /// let key = slab.insert(String::from("foo"));
@@ -743,7 +743,7 @@ impl<T> Slab<T> {
     /// will result in a panic:
     ///
     /// ```should_panic
-    /// # use slab::*;
+    /// # use lru_slab::*;
     ///
     /// let mut slab = Slab::new();
     /// let key = slab.insert(0);
@@ -780,7 +780,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     /// let key = slab.insert("hello");
     /// assert_eq!(slab[key], "hello");
@@ -802,7 +802,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let hello = {
@@ -850,7 +850,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let hello = slab.insert("hello");
@@ -883,7 +883,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let hello = slab.insert("hello");
@@ -909,7 +909,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let k1 = slab.insert(0);
@@ -949,7 +949,7 @@ impl<T> Slab<T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let _ = slab.insert(0);
@@ -1035,7 +1035,7 @@ impl<'a, T> IntoIterator for &'a mut Slab<T> {
 /// # Examples
 ///
 /// ```
-/// # use slab::*;
+/// # use lru_slab::*;
 ///
 /// let vec = vec![(2,'a'), (6,'b'), (7,'c')];
 /// let slab = vec.into_iter().collect::<Slab<char>>();
@@ -1047,7 +1047,7 @@ impl<'a, T> IntoIterator for &'a mut Slab<T> {
 /// With duplicate and unsorted keys:
 ///
 /// ```
-/// # use slab::*;
+/// # use lru_slab::*;
 ///
 /// let vec = vec![(20,'a'), (10,'b'), (11,'c'), (10,'d')];
 /// let slab = vec.into_iter().collect::<Slab<char>>();
@@ -1162,7 +1162,7 @@ impl<'a, T> VacantEntry<'a, T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let hello = {
@@ -1192,7 +1192,7 @@ impl<'a, T> VacantEntry<'a, T> {
     /// # Examples
     ///
     /// ```
-    /// # use slab::*;
+    /// # use lru_slab::*;
     /// let mut slab = Slab::new();
     ///
     /// let hello = {

@@ -1,6 +1,6 @@
-extern crate slab;
+extern crate lru_slab;
 
-use slab::*;
+use lru_slab::*;
 
 use std::panic::{catch_unwind, resume_unwind, AssertUnwindSafe};
 
