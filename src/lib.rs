@@ -824,7 +824,10 @@ impl<T> Slab<T> {
     /// ```
     pub fn vacant_entry(&mut self) -> VacantEntry<T> {
         VacantEntry {
-            key: SlabKey { key: self.next, gen: 0},
+            key: SlabKey {
+                key: self.next,
+                gen: 0,
+            },
             slab: self,
         }
     }
@@ -867,7 +870,10 @@ impl<T> Slab<T> {
     pub fn remove(&mut self, key: usize) -> T {
         if let Some(entry) = self.entries.get_mut(key) {
             // Swap the entry at the provided value
-            let src = Entry::Vacant(SlabKey { key: self.next, gen: 0 });
+            let src = Entry::Vacant(SlabKey {
+                key: self.next,
+                gen: 0,
+            });
             let prev = mem::replace(entry, src);
 
             match prev {
@@ -1086,7 +1092,8 @@ impl<T> FromIterator<(usize, T)> for Slab<T> {
                     // add the entry to the start of the vacant list
                     let next = slab.next;
                     slab.next = slab.entries.len();
-                    slab.entries.push(Entry::Vacant(SlabKey{ key: next, gen: 0 }));
+                    slab.entries
+                        .push(Entry::Vacant(SlabKey { key: next, gen: 0 }));
                 }
                 slab.entries.push(Entry::Occupied(value));
                 slab.len += 1;
