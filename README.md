@@ -1,6 +1,6 @@
 # Lru slab
 
-Pre-allocated storage for a uniform data type.
+Pre-allocated LRU storage for a uniform data type based on [slab](https://github.com/carllerche/slab).
 
 [![Crates.io](https://img.shields.io/crates/v/slab.svg?maxAge=2592000)](https://crates.io/crates/slab)
 [![Build Status](https://travis-ci.org/StoneDot/lru-slab.svg?branch=master)](https://travis-ci.org/StoneDot/lru-slab)
