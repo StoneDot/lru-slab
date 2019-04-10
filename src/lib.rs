@@ -125,6 +125,18 @@ pub struct Slab<T> {
     next: usize,
 }
 
+/// A key to access `Slab` entry
+///
+/// `SlabKey` allows `Slab` to check expire of the entry.
+#[derive(Debug, Clone, Copy)]
+pub struct SlabKey {
+    // Index of the entries
+    key: usize,
+
+    // Generation of the entries to distinguish the target element from removed elements
+    gen: usize,
+}
+
 /// A handle to a vacant entry in a `Slab`.
 ///
 /// `VacantEntry` allows constructing values with the key that they will be
@@ -150,7 +162,7 @@ pub struct Slab<T> {
 #[derive(Debug)]
 pub struct VacantEntry<'a, T: 'a> {
     slab: &'a mut Slab<T>,
-    key: usize,
+    key: SlabKey,
 }
 
 /// A consuming iterator over the values stored in a `Slab`
@@ -176,7 +188,7 @@ pub struct Drain<'a, T: 'a>(vec::Drain<'a, Entry<T>>);
 
 #[derive(Clone)]
 enum Entry<T> {
-    Vacant(usize),
+    Vacant(SlabKey),
     Occupied(T),
 }
 
@@ -394,7 +406,7 @@ impl<T> Slab<T> {
                 break;
             }
             if let Entry::Vacant(ref mut next) = *entry {
-                *next = self.next;
+                (*next).key = self.next;
                 self.next = i;
                 remaining_vacant -= 1;
             }
@@ -812,7 +824,7 @@ impl<T> Slab<T> {
     /// ```
     pub fn vacant_entry(&mut self) -> VacantEntry<T> {
         VacantEntry {
-            key: self.next,
+            key: SlabKey { key: self.next, gen: 0},
             slab: self,
         }
     }
@@ -825,7 +837,7 @@ impl<T> Slab<T> {
             self.next = key + 1;
         } else {
             self.next = match self.entries.get(key) {
-                Some(&Entry::Vacant(next)) => next,
+                Some(&Entry::Vacant(next)) => next.key,
                 _ => unreachable!(),
             };
             self.entries[key] = Entry::Occupied(val);
@@ -855,7 +867,8 @@ impl<T> Slab<T> {
     pub fn remove(&mut self, key: usize) -> T {
         if let Some(entry) = self.entries.get_mut(key) {
             // Swap the entry at the provided value
-            let prev = mem::replace(entry, Entry::Vacant(self.next));
+            let src = Entry::Vacant(SlabKey { key: self.next, gen: 0 });
+            let prev = mem::replace(entry, src);
 
             match prev {
                 Entry::Occupied(val) => {
@@ -1073,7 +1086,7 @@ impl<T> FromIterator<(usize, T)> for Slab<T> {
                     // add the entry to the start of the vacant list
                     let next = slab.next;
                     slab.next = slab.entries.len();
-                    slab.entries.push(Entry::Vacant(next));
+                    slab.entries.push(Entry::Vacant(SlabKey{ key: next, gen: 0 }));
                 }
                 slab.entries.push(Entry::Occupied(value));
                 slab.len += 1;
@@ -1171,9 +1184,9 @@ impl<'a, T> VacantEntry<'a, T> {
     /// assert_eq!("hello", slab[hello].1);
     /// ```
     pub fn insert(self, val: T) -> &'a mut T {
-        self.slab.insert_at(self.key, val);
+        self.slab.insert_at(self.key.key, val);
 
-        match self.slab.entries.get_mut(self.key) {
+        match self.slab.entries.get_mut(self.key.key) {
             Some(&mut Entry::Occupied(ref mut v)) => v,
             _ => unreachable!(),
         }
@@ -1201,7 +1214,7 @@ impl<'a, T> VacantEntry<'a, T> {
     /// assert_eq!("hello", slab[hello].1);
     /// ```
     pub fn key(&self) -> usize {
-        self.key
+        self.key.key
     }
 }
 
